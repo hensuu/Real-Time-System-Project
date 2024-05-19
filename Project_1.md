@@ -2,7 +2,6 @@
 
 > Group 13 
 B09902069 李昆昱
-> 
 
 ## Linux Scheduling Policy Testing and Analysis
 
@@ -37,7 +36,7 @@ Drop frame = 0
 
 ### 2. Applying EDF scheduling algorithm `SCHED_DEADLINE` to 7zip:
 
-![Untitled](Real%20Time%20System%20Project%201%20d62260d72f6c4f0cbd2e9a06987d0a79/Untitled.png)
+![SCHED_DEADLINE on 7zip](Project_1/SCHED_DEADLINE_on_7zip.png)
 
 After applying `SCHED_DEADLINE` real-time algorithm, 7zip benchmark process would consume as much CPU resource during runtime.
 
@@ -46,7 +45,7 @@ After applying `SCHED_DEADLINE` real-time algorithm, 7zip benchmark process woul
 
 ### 3. Applying EDF scheduling algorithm `SCHED_DEADLINE` to mpv:
 
-![Untitled](Real%20Time%20System%20Project%201%20d62260d72f6c4f0cbd2e9a06987d0a79/Untitled%201.png)
+![SCHED_DEADLINE on mpv](Project_1/SCHED_DEADLINE_on_mpv.png)
 
 - Since mpv only consumes fixed amount of CPU resource, it wouldn’t affect either process when sched-runtime of mpv > 2000000. 7zip benchmark would take away the remaining CPU resource.
 - When sched-runtime of mpv < 1000000, mpv have no enough resource, causing frame drops. 7zip benchmark have much more remaining CPU resource, which lead to better performance.
@@ -81,7 +80,7 @@ There is no need for `sudo make module_install` because we didn’t modify modul
 ## Code tracing on deadline scheduler
 
 > Modify the kernel to print a message whenever scheduling parameters are changed (e.g., by chrt) for a task.
-> 
+
 - We find two possible function in `kernel/sched/deadline.c` that may be called when calling sched_setattr() :
     - `bool dl_param_changed(struct task_struct *p, const struct sched_attr *attr)`
     - `void __setparam_dl(struct task_struct *p, const struct sched_attr *attr)`
